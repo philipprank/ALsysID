@@ -49,7 +49,7 @@ for i = 1:MC
         end
     elseif strcmp(estimation,'recursive') == true
         B0 = [0 0 0.2];
-        A0 = [1 -1.4 0.9];
+        A0 = [1 -1.6 0.8];
         obj_oe = recursiveOE([nb na 1],B0,A0);
         obj_oe.InitialParameterCovariance = [10^(-7) 0.1 0.1 0.1];
         u = idinput(T); % always use PRB for inital estimation
@@ -58,7 +58,7 @@ for i = 1:MC
             [B_id, F_id, ~] = step(obj_oe,y(j),u(j));
 
             if any(t_eval(:) == j) && j >= 50
-                data_id{i,idx} = iddata(y(1:j),u(1:j),1);
+                data_id{i,1} = iddata(y(1:j),u(1:j),1);
                 sys_id(idx,:,i) = [B_id F_id];
                 idx = idx + 1;
             end

@@ -122,12 +122,11 @@ for i = 1:MC
     elseif strcmp(estimation,'recursive') == true
         idx = 1;
         B0 = [0 0 0.2];
-        A0 = [1 -1.4 0.9];
+        A0 = [1 -1.6 0.8];
         obj_oe = recursiveOE([nb na 1],B0,A0);
         obj_oe.InitialParameterCovariance = [10^(-7) 0.1 0.1 0.1];
-        % theta = [B0(2:end) A0(2:end)];
+        theta = [B0(2:end) A0(2:end)];
         u_opt(1:max(na,nb)) = idinput(max(na,nb)); % PRBS for first inputs, which can't be optimized
-
         for j = max(na,nb)+1:T
             if strcmp(options.alg,'alg1') == true
                 for k = 1:length(M)
@@ -157,10 +156,10 @@ for i = 1:MC
             I_upd = update_cost(sys,u_opt(j:-1:j-nb+1),y_opt(j:-1:j-na+1));
             I(:,:,j) = I(:,:,j-1) + I_upd;
             [B_id, F_id, ~] = step(obj_oe,y_opt(j),u_opt(j));
-            % theta = [B_id(2:end) F_id(2:end)];
+            theta = [B_id(2:end) F_id(2:end)];
 
             if any(t_eval(:) == j) && j >= 50
-                data_id{i,idx} = iddata(y_opt(1:j),u_opt(1:j),1);
+                data_id{i,1} = iddata(y_opt(1:j),u_opt(1:j),1);
                 sys_id(idx,:,i) = [B_id F_id];
                 idx = idx + 1;
             end

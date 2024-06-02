@@ -27,7 +27,7 @@ sim_options = struct();
 sim_options.param = sys_param;
 
 %% General Options
-sim_options.MC = 50;
+sim_options.MC = 100;
 sim_options.T = 400;
 sim_options.Ts = 1;
 % save or don't save simulated data (0 or 1)

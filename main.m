@@ -11,15 +11,14 @@ options = sim_options;
 sys_sim = example_sys(options);
 
 %% Simulation
-e = sqrt(options.var_noise)*randn(options.T,options.MC); % white noise (simulation)
+e = sqrt(options.var_noise)*randn(options.T,options.MC); % white noise (used for simulation)
 
 [sys_id_rcdhz,data_id_rcdhz] = opt_input_rcdhz(sys_sim,options,e);
-options.estimation = 'true';
 [sys_id_rand,data_id_rand] = input_rand(sys_sim,options,e);
 
 sys_id = struct('rand',sys_id_rand,'rcdhz',sys_id_rcdhz);
-%data_id = struct('rand',data_id_rand,'rcdhz',data_id_rcdhz);
-data_id = 0;
+data_id = struct('rand',data_id_rand,'rcdhz',data_id_rcdhz);
+
 %% Plots (Selection)
 plots_main(options,sys_id,sys_sim,data_id)
 
