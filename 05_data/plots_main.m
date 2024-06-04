@@ -142,3 +142,38 @@ colormap(map)
 colorbar
 clim([-60 20])
 
+%% Plot 4
+f4 = figure;
+f4.Position = [200 100 1000 500];
+t4 = tiledlayout(3,1);
+t4.TileSpacing = 'compact';
+t4.Padding = 'compact';
+title(t4,'Input \& Output Signals for Second-Order System', 'Interpreter','latex')
+
+% nexttile
+% plot(1:T,data_id_rand(1).u1, 1:T,data_id_rand(1).y1, 'LineWidth',1.5)
+% title('White Noise Input Signal', 'Interpreter','latex')
+% xlabel('Observations T', 'Interpreter','latex')
+% ylabel('Magnitude', 'Interpreter','latex')
+% legend('input','output','Location','northeast', 'Interpreter','latex')
+% ylim([-5 5])
+
+nexttile
+plot(1:T,data_id(1).rand.InputData, 1:T,data_id(1).rand.OutputData, 'LineWidth',1.5)
+title('PRBS Input Signal', 'Interpreter','latex')
+xlabel('Observations T', 'Interpreter','latex')
+ylabel('Magnitude', 'Interpreter','latex')
+legend('input','output','Location','northeast', 'Interpreter','latex')
+ylim([-5 5])
+
+
+nexttile
+plot(1:T,data_id(1).rcdhz.InputData, 1:T,data_id(1).rcdhz.OutputData, 'LineWidth',1.5)
+title('D-Optimal designed Input Signal ($H=10$)', 'Interpreter','latex')
+xlabel('Observations T', 'Interpreter','latex')
+ylabel('Magnitude', 'Interpreter','latex')
+legend('input','output','Location','northeast', 'Interpreter','latex')
+ylim([-5 5])
+
+
+%% Plot 5

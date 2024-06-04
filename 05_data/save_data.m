@@ -1,4 +1,4 @@
-function [outputArg1,outputArg2] = export_data(inputArg1,inputArg2)
+function data_struct = export_data(inputArg1,inputArg2)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 outputArg1 = inputArg1;

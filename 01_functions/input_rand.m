@@ -10,7 +10,6 @@ method = options.method.rand;
 interval = options.interval;
 estimation = options.estimation;
 
-y = zeros(T,1);
 init_sys = idtf([0 0 NaN],[1 NaN(1,2)],1);
 init_sys.Structure.Numerator.Free = [0 0 1];
 
@@ -33,23 +32,28 @@ elseif strcmp(method,'wnoise')
 elseif strcmp(method,'chirp')
     t = 0:Ts:T;
     u = chrip(t,0,1,250);
+elseif strcmp(method,'all')
+    u = [idinput(T) randn(T,1)];
 end
+y = zeros(T,size(u,2));
 
 for i = 1:MC
     idx = 1;
     if strcmp(estimation,'true') == true
-        for j = max(na,nb)+1:T
-            y(j) = sim_system(sys,u(j-1:-1:j-nb),y(j-1:-1:j-na),e(j,i));
-            if any(t_eval(:) == j) && j >= 50
-                data_id{i,1} = iddata(y(1:j),u(1:j),1);
-                id_struct = oe(data_id{i,1},init_sys);
-                sys_id(idx,:,i) = [id_struct.B id_struct.F];
-                idx = idx + 1;
+        for k = 1:size(u,2)
+            for j = max(na,nb)+1:T
+                y(j) = sim_system(sys,u(j-1:-1:j-nb,k),y(j-1:-1:j-na,k),e(j,i));
+                if any(t_eval(:) == j) && j >= 50
+                    data_id{i,1} = iddata(y(1:j,k),u(1:j,k),1);
+                    id_struct = oe(data_id{i,1},init_sys);
+                    sys_id(idx,:,i) = [id_struct.B id_struct.F];
+                    idx = idx + 1;
+                end
             end
         end
     elseif strcmp(estimation,'recursive') == true
         B0 = [0 0 0.2];
-        A0 = [1 -1.6 0.8];
+        A0 = [1 -1.6 0.7];
         obj_oe = recursiveOE([nb na 1],B0,A0);
         obj_oe.InitialParameterCovariance = [10^(-7) 0.1 0.1 0.1];
         u = idinput(T); % always use PRB for inital estimation
