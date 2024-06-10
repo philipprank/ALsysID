@@ -3,14 +3,23 @@ function [sys_id,data_id] = opt_input_cvrlx(sys,options,e)
 %%%     ACTIVE INPUT DESIGN        %%%
 %%%     (CONVEX REALAXATION)       %%%
 
-% Active input design in the time domain by
-% convex relaxation based on "Input Design
-% for System Identification via Convex 
-% Relaxation", Manchsester
+% Active input design (offline) in the time
+% domain by convex relaxation based on
+% "Input Design for System Identification
+% via Convex Relaxation", Manchsester 2010
 % Assumes a-priori knowledge of the true
-% parameters and does the calculation before
+% parameters and does all calculation before
 % simulation (time-consuming for slow systems
 % or long observations)
+
+%%% Function needs CVX (cvxr.com/cvx/)! %%%
+
+%% Initialization
+MC = options.MC;
+T = options.T;
+H = options.H;
+interval = options.interval;
+estimation = options.estimation;
 
 %% Input-Matrix Generation
 Q = cell(p,p);
@@ -83,3 +92,19 @@ for t = p+1:T
     Q_elem = Q_elem + In1'*In2;
 end
 end
+
+%% Cost Function with Different Optimality Criteria
+function J = calc_cost(I_f,I,options)
+if strcmp(options.opt,'a-opt') == true
+    J = trace(I_f + I);
+elseif strcmp(options.opt,'d-opt') == true
+    J = log(det(I_f + I));
+elseif strcmp(options.opt,'e-opt') == true
+    J = min(eig(I_f + I));
+else
+    J = 'error';
+end
+end
+
+
+

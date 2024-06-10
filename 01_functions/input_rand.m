@@ -30,8 +30,10 @@ if strcmp(method,'prbs')
 elseif strcmp(method,'wnoise')
     u = randn(T,1);
 elseif strcmp(method,'chirp')
-    t = 0:Ts:T;
-    u = chrip(t,0,1,250);
+    t = 0:1/Ts:T-1/Ts;
+    f0 = 0; % starting frequency [Hz]
+    f1 = 1/2; % end frequency [Hz]
+    u = chirp(t,f0,T,f1)';
 elseif strcmp(method,'all')
     u = [idinput(T) randn(T,1)];
 end
@@ -56,7 +58,7 @@ for i = 1:MC
         A0 = [1 -1.6 0.7];
         obj_oe = recursiveOE([nb na 1],B0,A0);
         obj_oe.InitialParameterCovariance = [10^(-7) 0.1 0.1 0.1];
-        u = idinput(T); % always use PRB for inital estimation
+        % u = idinput(T); % always use PRBS for inital estimation
         for j = max(na,nb)+1:T
             y(j) = sim_system(sys,u(j-1:-1:j-nb),y(j-1:-1:j-na),e(j,i));
             [B_id, F_id, ~] = step(obj_oe,y(j),u(j));

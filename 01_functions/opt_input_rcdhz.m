@@ -25,10 +25,10 @@ function [sys_id,data_id] = opt_input_rcdhz(sys,options,e)
 % -> fisher_pred(...)
 
 % Two algorithms
-% 1. oe: At defined timesteps (interval)
-%        all data are used for PEM
-% 2. recusriveoe: At every timestep the parameters
-%                 are updated recursively
+% 1. oe (true): At defined timesteps (interval)
+%               all data are used for PEM
+% 2. recusriveoe (recursive): At every timestep the
+%                 parametersare updated recursively
 %
 %%==================================%%
 

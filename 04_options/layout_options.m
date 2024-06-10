@@ -16,6 +16,7 @@ set(0,'defaultLegendInterpreter','latex');
 set(0,'defaultAxesFontSize',10)
 set(0,'defaultLegendFontSize',10)
 set(0,'DefaultLegendFontSizeMode','manual')
+set(0, 'DefaultAxesBox', 'on');
 set(0,{'DefaultAxesXColor','DefaultAxesYColor','DefaultAxesZColor'},...
     {'k','k','k'})
 

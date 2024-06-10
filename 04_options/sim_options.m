@@ -15,8 +15,9 @@ function sim_options = sim_options
 %  i.   A-optimal design -> 'a-opt'
 %  ii.  D-optimal design -> 'd-opt'
 %  iii. E-optimal design -> 'e-opt'
-% All designed inputs gave beter results for the consdiered examples,
-% however the best choice was D-optimal design
+% All designed inputs gave better results for the consdiered examples,
+% however the best choice was D-optimal design (under appropriate
+% sim_options)
 % 3. Number of Monte-Carlo Simuations (MC)
 % 4. Observations (T)
 
@@ -27,10 +28,10 @@ sim_options = struct();
 sim_options.param = sys_param;
 
 %% General Options
-sim_options.MC = 40;
+sim_options.MC = 200;
 sim_options.T = 400;
 sim_options.Ts = 1;
-% save or don't save simulated data (0 or 1)
+% don't save or save simulated data (0 or 1)
 sim_options.svdata = 0;
 
 %% System Options
@@ -40,7 +41,7 @@ sim_options.var_noise = 0.01;
 sim_options.amp_con = 1;
 
 %% Input Options
-% 'prbs', 'wnoise', 'all'
+% 'prbs', 'wnoise', 'chirp' 'all'
 sim_options.method.rand = 'prbs';
 %'act_rcdhz', 'act_freq', 'act_cvrlx', 'all'
 sim_options.method.active = 'act_rdhz';
@@ -49,8 +50,8 @@ sim_options.opt = 'd-opt';
 % 'alg1', 'alg2', 'alg3', 'all'
 sim_options.alg = 'alg1';
 % 'true', 'recursive'
-sim_options.estimation = 'true';
-sim_options.init_T = 50;
+sim_options.estimation = 'recursive';
+sim_options.init_T = 60;
 % relevant only for 'true' and thereby created plots
 sim_options.interval = 10; % time steps, where parameters get evaluated
 % integer or intervall for comparison, e.g. [4 10] or [4 2 10]

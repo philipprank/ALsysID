@@ -19,7 +19,8 @@ e = sqrt(options.var_noise)*randn(options.T,options.MC); % white noise (used for
 sys_id = struct('rand',sys_id_rand,'rcdhz',sys_id_rcdhz);
 data_id = struct('rand',data_id_rand,'rcdhz',data_id_rcdhz);
 
-%% Plots (Selection)
+%% Data % Plots (Selection)
+id_struct = save_data(options,sys_id,data_id); 
 plots_main(options,sys_id,sys_sim,data_id)
 
 toc
