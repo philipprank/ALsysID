@@ -19,5 +19,6 @@ set(0,'DefaultLegendFontSizeMode','manual')
 set(0, 'DefaultAxesBox', 'on');
 set(0,{'DefaultAxesXColor','DefaultAxesYColor','DefaultAxesZColor'},...
     {'k','k','k'})
+set(0,'DefaultFigureColormap',feval('sky'));
 
 layout = struct('colors',colors);

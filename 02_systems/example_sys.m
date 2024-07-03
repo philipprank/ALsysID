@@ -27,7 +27,7 @@ sys = idpoly(na,nb,1,1,1,[],options.Ts);
 elseif ex == 3
 %% Example 3 (Coupled Water Tanks)
 %%====================%%
-% STILL TO DO
+% YET TO DO
 % Transfer Function (MIMO) [2x2]:
 % G11(q) =
 % G12(q) =

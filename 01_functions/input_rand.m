@@ -9,6 +9,7 @@ Ts = options.Ts;
 method = options.method.rand;
 interval = options.interval;
 estimation = options.estimation;
+init_param = options.init_param;
 
 init_sys = idtf([0 0 NaN],[1 NaN(1,2)],1);
 init_sys.Structure.Numerator.Free = [0 0 1];
@@ -54,10 +55,15 @@ for i = 1:MC
             end
         end
     elseif strcmp(estimation,'recursive') == true
-        B0 = [0 0 0.2];
-        A0 = [1 -1.6 0.7];
+        B0 = init_param.B;
+        A0 = init_param.A;
         obj_oe = recursiveOE([nb na 1],B0,A0);
-        obj_oe.InitialParameterCovariance = [10^(-7) 0.1 0.1 0.1];
+        theta = [B0(2:end) A0(2:end)];
+        calc_covar = zeros(1,length(theta));
+        calc_covar(theta == 0) = 10^(-7); % assumed known system structure
+        calc_covar(theta ~= 0) = 0.1;
+        obj_oe.InitialParameterCovariance = diag(calc_covar);
+
         % u = idinput(T); % always use PRBS for inital estimation
         for j = max(na,nb)+1:T
             y(j) = sim_system(sys,u(j-1:-1:j-nb),y(j-1:-1:j-na),e(j,i));

@@ -46,14 +46,21 @@ sim_options.method.rand = 'prbs';
 %'act_rcdhz', 'act_freq', 'act_cvrlx', 'all'
 sim_options.method.active = 'act_rdhz';
 % 'a-opt', 'd-opt', 'e-opt'
-sim_options.opt = 'd-opt';
+sim_options.opt = 'a-opt';
 % 'alg1', 'alg2', 'alg3', 'all'
 sim_options.alg = 'alg1';
 % 'true', 'recursive'
 sim_options.estimation = 'recursive';
 sim_options.init_T = 60;
-% relevant only for 'true' and thereby created plots
-sim_options.interval = 10; % time steps, where parameters get evaluated
+sim_options.interval = 10; % relvevant only for 'true' (time steps, where parameters get evaluated)
+% exemplary initial parameters (need to be stable!)
+if strcmp(sim_options.sys,'sys1') == true
+    sim_options.init_param.B = [0 0 0.2];  % relevant only for 'recursive'
+    sim_options.init_param.A = [1 -1.6 0.8];
+elseif strcmp(sim_options.sys,'sys2') == true
+    sim_options.init_param.B = [0 0 0.45 0.40];
+    sim_options.init_param.A = [1 -1.2 1.5 -1.2 0.7];
+end
 % integer or intervall for comparison, e.g. [4 10] or [4 2 10]
 % (needs to be sufficiently large)
 sim_options.H = 10;

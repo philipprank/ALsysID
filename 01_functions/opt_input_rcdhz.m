@@ -28,7 +28,7 @@ function [sys_id,data_id] = opt_input_rcdhz(sys,options,e)
 % 1. oe (true): At defined timesteps (interval)
 %               all data are used for PEM
 % 2. recusriveoe (recursive): At every timestep the
-%                 parametersare updated recursively
+%                 parameters are updated recursively
 %
 %%==================================%%
 
@@ -38,6 +38,7 @@ T = options.T;
 H = options.H;
 interval = options.interval;
 estimation = options.estimation;
+init_param = options.init_param;
 
 na = length(sys.A) - 1;
 nb = length(sys.B) - 1;
@@ -121,11 +122,14 @@ for i = 1:MC
         %% Algorithm (Optimal Input Design, True Parameters for Optimization)
     elseif strcmp(estimation,'recursive') == true
         idx = 1;
-        B0 = [0 0 0.2];
-        A0 = [1 -1.6 0.8];
+        B0 = init_param.B;
+        A0 = init_param.A;
         obj_oe = recursiveOE([nb na 1],B0,A0);
-        obj_oe.InitialParameterCovariance = [10^(-7) 0.1 0.1 0.1];
         theta = [B0(2:end) A0(2:end)];
+        calc_covar = zeros(1,length(theta));
+        calc_covar(theta == 0) = 10^(-7); % assumed known system structure
+        calc_covar(theta ~= 0) = 0.1;
+        obj_oe.InitialParameterCovariance = diag(calc_covar);
         u_opt(1:max(na,nb)) = idinput(max(na,nb)); % PRBS for first inputs, which can't be optimized
         for j = max(na,nb)+1:T
             if strcmp(options.alg,'alg1') == true
