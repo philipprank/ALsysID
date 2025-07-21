@@ -20,7 +20,8 @@ avg_rcdhz = mean(theta_rcdhz,3);
 
 %% Plot 1
 f1 = figure;
-f1.Position = [200 100 1000 500];
+f1.Units = 'centimeters';
+f1.Position = [8 4 14 10];
 
 t1 = tiledlayout(3,1);
 t1.TileSpacing = 'compact';
@@ -30,11 +31,10 @@ ax1 = nexttile;
 set(ax1,'xticklabel',[])
 plot(1:MC,theta_sim(2)*ones(MC,1), 1:MC,squeeze(theta_rand(end,3,:)), 1:MC,squeeze(theta_rcdhz(end,3,:)), 'LineWidth', 1.5)
 xlim([1 MC])
-title(['$ \theta_{1} = ' num2str(theta_sim(2)) ' \quad \hat{\theta}_{1,method} = ' num2str(round(mean(theta_rand(end,3,:)),3)) '\; (\sigma = ' num2str(round(std(theta_rand(end,3,:)),3)) ') ' ...
-    '\quad \hat{\theta}_{1,act} = ' num2str(round(mean(theta_rcdhz(end,3,:)),3)) ' \; (\sigma = ' num2str(round(std(theta_rcdhz(end,3,:)),3)) ')$'])
+title(['$ \theta_{1} = ' num2str(theta_sim(2)) ' \quad \hat{\theta}_{1,prbs} = ' num2str(round(mean(theta_rand(end,3,:)),3)) '\; (\sigma = ' num2str(round(std(theta_rand(end,3,:)),3)) ') ' ')$'])
 ylabel('$\theta_{1}$')
 legend('$\theta$','$\hat{\theta}_{prbs}$','$\hat{\theta}_{act}$',...
-    'Location','southeast')
+    'Location','southeast', 'FontSize', 8.5)
 
 ax2 = nexttile;
 set(ax2,'xticklabel',[])
@@ -49,12 +49,13 @@ plot(1:MC,theta_sim(4)*ones(MC,1), 1:MC,squeeze(theta_rand(end,6,:)), 1:MC,squee
 xlim([1 MC])
 title(['$ \theta_{3} = ' num2str(theta_sim(4)) ' \quad \hat{\theta}_{3,prbs} = ' num2str(round(mean(theta_rand(end,6,:)),3)) '\; (\sigma = ' num2str(round(std(theta_rand(end,6,:)),3)) ') ' ...
     '\quad \hat{\theta}_{3,act} = ' num2str(round(mean(theta_rcdhz(end,6,:)),3)) ' \; (\sigma = ' num2str(round(std(theta_rcdhz(end,6,:)),3)) ')$'])
-xlabel('Simulations')
+xlabel('Simulations M')
 ylabel('$\theta_{3}$')
 
 %% Plot 2
 f2 = figure;
-f2.Position = [200 100 1000 500];
+f2.Units = 'centimeters';
+f2.Position = [8 4 15 9];
 
 t2 = tiledlayout(2,3);
 t2.TileSpacing = 'compact';
@@ -75,9 +76,9 @@ plot(50:interval:T,avg_rcdhz(:,6), '--', 'Color', colors(2,:), 'LineWidth', 1.5)
 
 xlim([50 T])
 title(['Averages (' num2str(MC) '$\ $Monte-Carlo Simulations)'])
-xlabel('Observations T')
+xlabel('Observations N')
 ylabel('$\mathrm{avg}({\theta})$')
-legend('$u_{prbs}$','$u_{act}$', 'Location','best')
+legend('$u_{prbs}$','$u_{act}$', 'Location','best', 'FontSize', 8.5)
 
 
 ax2 = nexttile;
@@ -85,27 +86,26 @@ set(ax2,'xticklabel',[])
 plot(50:interval:T,std(squeeze(theta_rand(:,3,:)),[],2), 50:interval:T,std(squeeze(theta_rcdhz(:,3,:)),[],2), 'LineWidth', 1.5)
 xlim([50 T])
 title('Standard Deviation', 'Interpreter','latex')
-xlabel('Observations T', 'Interpreter','latex')
+xlabel('Observations N', 'Interpreter','latex')
 ylabel('$\sigma({\theta}_{1})$', 'Interpreter','latex')
-legend('$u_{prbs}$','$u_{act}$', 'Location','northeast', 'Interpreter','latex')
+% legend('$u_{prbs}$','$u_{act}$', 'Location','northeast', 'Interpreter','latex')
 
 ax3 = nexttile;
 set(ax3,'xticklabel',[])
 plot(50:interval:T,std(squeeze(theta_rand(:,5,:)),[],2), 50:interval:T,std(squeeze(theta_rcdhz(:,5,:)),[],2), 'LineWidth', 1.5)
 xlim([50 T])
 title('Standard Deviation', 'Interpreter','latex')
-xlabel('Observations T', 'Interpreter','latex')
+xlabel('Observations N', 'Interpreter','latex')
 ylabel('$\sigma({\theta}_{2})$', 'Interpreter','latex')
-legend('$u_{prbs}$','$u_{act}$', 'Location','northeast', 'Interpreter','latex')
+% legend('$u_{prbs}$','$u_{act}$', 'Location','northeast', 'Interpreter','latex', 'FontSize', 8)
 
 ax4 = nexttile;
 plot(50:interval:T,std(squeeze(theta_rand(:,6,:)),[],2), 50:interval:T,std(squeeze(theta_rcdhz(:,6,:)),[],2), 'LineWidth', 1.5)
 xlim([50 T])
 title('Standard Deviation', 'Interpreter','latex')
-xlabel('Observations T', 'Interpreter','latex')
+xlabel('Observations N', 'Interpreter','latex')
 ylabel('$\sigma({\theta}_{3})$', 'Interpreter','latex')
-legend('$u_{prbs}$','$u_{act}$',...
-    'Location','northeast', 'Interpreter','latex')
+legend('$u_{prbs}$','$u_{act}$', 'Location','northeast', 'Interpreter','latex', 'FontSize', 8.5)
 
 %% Plot 3
 f3 = figure;
@@ -161,7 +161,7 @@ title(t4,'Input \& Output Signals for Second-Order System', 'Interpreter','latex
 nexttile
 plot(1:T,data_id(1).rand.InputData, 1:T,data_id(1).rand.OutputData, 'LineWidth',1.5)
 title('PRBS Input Signal', 'Interpreter','latex')
-xlabel('Observations T', 'Interpreter','latex')
+xlabel('Observations N', 'Interpreter','latex')
 ylabel('Magnitude', 'Interpreter','latex')
 legend('input','output','Location','northeast', 'Interpreter','latex')
 ylim([-5 5])
@@ -170,10 +170,16 @@ ylim([-5 5])
 nexttile
 plot(1:T,data_id(1).rcdhz.InputData, 1:T,data_id(1).rcdhz.OutputData, 'LineWidth',1.5)
 title('D-Optimal designed Input Signal ($H=10$)', 'Interpreter','latex')
-xlabel('Observations T', 'Interpreter','latex')
+xlabel('Observations N', 'Interpreter','latex')
 ylabel('Magnitude', 'Interpreter','latex')
 legend('input','output','Location','northeast', 'Interpreter','latex')
 ylim([-5 5])
 
 
 %% Plot 5
+
+%% Export Graphics
+f1name = fullfile('C:\Users\phili\OneDrive - bwedu\ALsysID\05_data\plots_full','fig_5_4.pdf');
+exportgraphics(f1,f1name,'ContentType','vector');
+f2name = fullfile('C:\Users\phili\OneDrive - bwedu\ALsysID\05_data\plots_full','fig_5_5.pdf');
+exportgraphics(f2,f2name,'ContentType','vector');

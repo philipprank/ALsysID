@@ -103,8 +103,8 @@ for i = 1:MC
             elseif strcmp(options.alg,'alg2') == true
                 lb = -1*ones(H_eff);
                 ub = 1*ones(H_eff);
-                u_opt_H = fmincon(calc_cost,idinput(H_eff),[],[],[],[],lb,ub);
-                u_opt(j) = u_opt_H(j,1);
+                % u_opt_H = fmincon(calc_cost,idinput(H_eff),[],[],[],[],lb,ub);
+                % u_opt(j) = u_opt_H(j,1);
             end
 
             y_opt(j) = sim_system(sys,u_opt(j-1:-1:j-nb),y_opt(j-1:-1:j-na),e(j,i));
@@ -152,8 +152,8 @@ for i = 1:MC
             elseif strcmp(options.alg,'alg2') == true
                 lb = -1*ones(H_eff);
                 ub = 1*ones(H_eff);
-                u_opt_H = fmincon(calc_cost,idinput(H_eff),[],[],[],[],lb,ub);
-                u_opt(j) = u_opt_H(j,1);
+                % u_opt_H = fmincon(calc_cost,idinput(H_eff),[],[],[],[],lb,ub);
+                % u_opt(j) = u_opt_H(j,1);
             end
 
             y_opt(j) = sim_system(sys,u_opt(j-1:-1:j-nb),y_opt(j-1:-1:j-na),e(j,i));

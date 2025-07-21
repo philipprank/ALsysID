@@ -28,7 +28,7 @@ sim_options = struct();
 sim_options.param = sys_param;
 
 %% General Options
-sim_options.MC = 200;
+sim_options.MC = 100;
 sim_options.T = 400;
 sim_options.Ts = 1;
 % don't save or save simulated data (0 or 1)
@@ -46,7 +46,7 @@ sim_options.method.rand = 'prbs';
 %'act_rcdhz', 'act_freq', 'act_cvrlx', 'all'
 sim_options.method.active = 'act_rdhz';
 % 'a-opt', 'd-opt', 'e-opt'
-sim_options.opt = 'a-opt';
+sim_options.opt = 'd-opt';
 % 'alg1', 'alg2', 'alg3', 'all'
 sim_options.alg = 'alg1';
 % 'true', 'recursive'

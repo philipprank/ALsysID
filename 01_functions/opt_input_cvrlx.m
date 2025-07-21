@@ -12,7 +12,7 @@ function [sys_id,data_id] = opt_input_cvrlx(sys,options,e)
 % simulation (time-consuming for slow systems
 % or long observations)
 
-%%% Function needs CVX (cvxr.com/cvx/)! %%%
+%%% Function needs CVX (cvxr.com/cvx/) %%%
 
 %% Initialization
 MC = options.MC;
