@@ -1,0 +1,66 @@
+% This file was created by matlab2tikz.
+%
+%The latest updates can be retrieved from
+%  http://www.mathworks.com/matlabcentral/fileexchange/22022-matlab2tikz-matlab2tikz
+%where you can also make suggestions and rate matlab2tikz.
+%
+\definecolor{mycolor1}{rgb}{0.00000,0.31760,0.61960}%
+\definecolor{mycolor2}{rgb}{1.00000,0.83530,0.00000}%
+%
+\begin{tikzpicture}
+
+\begin{axis}[%
+width=4.521in,
+height=3.566in,
+at={(0.758in,0.481in)},
+scale only axis,
+separate axis lines,
+every outer x axis line/.append style={black},
+every x tick label/.append style={font=\color{black}},
+every x tick/.append style={black},
+xmin=100,
+xmax=1000,
+xlabel={Iteration $T$},
+every outer y axis line/.append style={black},
+every y tick label/.append style={font=\color{black}},
+every y tick/.append style={black},
+ymin=0.05,
+ymax=0.45,
+ylabel={$\| \hat{A}_{T} - A_{\star} \|_{2}$},
+axis background/.style={fill=white},
+xmajorgrids,
+ymajorgrids,
+legend style={legend cell align=left, align=left, draw=black}
+]
+\addplot [color=mycolor1, line width=1.5pt]
+  table[row sep=crcr]{%
+100	0.428223180573879\\
+200	0.249668312068788\\
+300	0.205911657640117\\
+400	0.196572082079388\\
+500	0.189774521732074\\
+600	0.158920071731563\\
+700	0.154183251553844\\
+800	0.146202983593938\\
+900	0.134287253958795\\
+1000	0.117750819779341\\
+};
+\addlegendentry{Random Input}
+
+\addplot [color=mycolor2, line width=1.5pt]
+  table[row sep=crcr]{%
+100	0.151649890007792\\
+200	0.100984716900435\\
+300	0.0884914333523652\\
+400	0.0780641147986066\\
+500	0.0725282304770529\\
+600	0.0658788168836544\\
+700	0.0639874815508486\\
+800	0.0591298442617518\\
+900	0.0592277486955451\\
+1000	0.0572305125606486\\
+};
+\addlegendentry{Designed Input}
+
+\end{axis}
+\end{tikzpicture}%
